@@ -1,0 +1,82 @@
+tags:
+  - Auth
+summary: Register user
+operationId: registerUser
+description: Register a new user using name, email, and password.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            description: User's name
+            type: string
+            example: John Doe
+          email:
+            description: User's email
+            type: string
+            format: email
+            example: john@example.com
+          password:
+            description: Password with at least one uppercase letter, one lowercase letter, and one digit
+            type: string
+            example: Password123
+responses:
+  '201':
+    description: Successfully registered a user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: 664b83dd3f77f3b7a54f9140
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: john@example.com
+                balance:
+                  type: number
+                  example: 0
+                avatar:
+                  type: string
+                  example: null
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '409':
+    description: Email already in use
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: Email in use
+  '401':
+    $ref: ../../../components/responses/401.yaml
